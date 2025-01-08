@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Σύστημα Κρατήσεων</title>
+    <title>Room Reservations</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Σύστημα Κρατήσεων</h1>
-        <button onclick="previous()">Προηγούμενο</button>
-        <button onclick="next()">Επόμενο</button>
-        <button onclick="deleteAllBookings()">Διαγραφή Όλων</button>
-        <div id="dashboard"></div>
+    <h1>Σύστημα Κρατήσεων</h1>
+    <div class="navigation">
+        <button onclick="loadPreviousPage()">Προηγούμενο</button>
+        <button onclick="loadNextPage()">Επόμενο</button>
     </div>
-
-    <script src="/static/script.js"></script>
+    <div id="dashboard"></div>
+    <script type="module" src="/static/js/main.js"></script>
 </body>
 </html>
+
+
