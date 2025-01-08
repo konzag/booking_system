@@ -1,6 +1,7 @@
 
 // frontend_reservation.js
 import { showProviderSelection } from './frontend_utils.js';
+import { loadDashboard } from './frontend_dashboard.js';
 
 export async function makeReservation(room, date) {
     if (!confirm(`You selected Room: ${room} on Date: ${date}. Do you want to continue?`)) {
