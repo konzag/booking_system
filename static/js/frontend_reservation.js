@@ -1,53 +1,37 @@
 
 // frontend_reservation.js
-import { showProviderSelection } from './frontend_utils.js';
 import { loadDashboard } from './frontend_dashboard.js';
 
 export async function makeReservation(room, date) {
-    if (!confirm(`You selected Room: ${room} on Date: ${date}. Do you want to continue?`)) {
-        alert('Reservation process cancelled.');
-        return;
+    const name = prompt("Όνομα και Επίθετο:");
+    if (!name) return alert("Reservation cancelled.");
+
+    const phone = prompt("Τηλέφωνο:");
+    if (!phone) return alert("Reservation cancelled.");
+
+    const provider = prompt("Κράτηση από (Booking/Τηλεφωνικά):");
+    if (!provider) return alert("Reservation cancelled.");
+
+    const nights = prompt("Βραδιές (πλήθος διανυκτερεύσεων):");
+    if (!nights || isNaN(nights) || nights <= 0) {
+        return alert("Invalid input for nights. Reservation cancelled.");
     }
 
-    const name = prompt('Όνομα και Επίθετο:');
-    if (!name) {
-        alert('Reservation cancelled at Name step.');
-        return;
-    }
-
-    const phone = prompt('Τηλέφωνο:');
-    if (!phone) {
-        alert('Reservation cancelled at Phone step.');
-        return;
-    }
-
-    const provider = await showProviderSelection();
-    if (!provider) {
-        alert('Reservation cancelled at Provider step.');
-        return;
-    }
-
-    let nights;
-    while (true) {
-        nights = prompt('Βραδιές (πλήθος διανυκτερεύσεων):');
-        if (!nights || isNaN(nights) || nights <= 0) {
-            alert('Invalid nights input. Please enter a valid positive number.');
-        } else {
-            break;
-        }
-    }
-
-    fetch('/api/reserve', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ room, name, phone, provider, arrival_date: date, nights })
+    fetch("/api/reserve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ room, date, name, phone, provider, nights })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return response.json();
     })
     .then(() => {
-        alert('Reservation completed successfully!');
-        loadDashboard();
+        alert("Reservation completed successfully!");
+        loadDashboard(); // Reload dashboard after reservation
     })
     .catch(error => {
-        console.error('Error making reservation:', error);
-        alert('An error occurred while making the reservation.');
+        console.error("Error making reservation:", error);
+        alert("An error occurred while making the reservation.");
     });
 }

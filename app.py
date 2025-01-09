@@ -1,8 +1,7 @@
 
 from flask import Flask, render_template
-from routes.dashboard import dashboard
-from routes.reservations import reservations
-from routes.reset import reset
+from backend.backend_dashboard import dashboard
+from backend.backend_reservation import reservation
 import webbrowser
 import threading
 from browser_launcher import launch_browser
@@ -15,8 +14,7 @@ clear_cache()
 
 # Register Blueprints
 app.register_blueprint(dashboard)
-app.register_blueprint(reservations)
-app.register_blueprint(reset)
+app.register_blueprint(reservation)
 
 # Default route
 @app.route('/')
