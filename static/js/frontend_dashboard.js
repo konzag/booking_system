@@ -1,8 +1,13 @@
 
 // frontend_dashboard.js
+import { makeReservation } from './frontend_reservation.js';
+
 export function loadDashboard() {
     fetch('/api/dashboard')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+        })
         .then(data => {
             const dashboard = document.getElementById('dashboard');
             dashboard.innerHTML = '';
@@ -25,7 +30,8 @@ export function loadDashboard() {
 
                 data.dates.forEach(date => {
                     const cell = row.insertCell();
-                    const reservation = data.reservations[`${room}-${date}`];
+                    const reservationKey = `${room}-${date}`;
+                    const reservation = data.reservations[reservationKey];
 
                     if (reservation) {
                         cell.innerHTML = `<strong style="color: red;">${reservation.name}</strong><br><span style="color: red;">${reservation.provider}</span>`;

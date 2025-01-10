@@ -1,24 +1,24 @@
 
 import sqlite3
+from config import DB_PATH
 
-DB_PATH = 'database.db'
+def initialize_database():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
 
-def initialize_db():
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS reservations (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                room TEXT NOT NULL,
-                name TEXT NOT NULL,
-                phone TEXT NOT NULL,
-                provider TEXT NOT NULL,
-                arrival_date TEXT NOT NULL,
-                departure_date TEXT NOT NULL
-            )
-        ''')
-        conn.commit()
+    # Create the reservations table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS reservations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            room TEXT NOT NULL,
+            date TEXT NOT NULL,
+            name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            provider TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
-if __name__ == '__main__':
-    initialize_db()
-    print("Database initialized successfully.")
+if __name__ == "__main__":
+    initialize_database()

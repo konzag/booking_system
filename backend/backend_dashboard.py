@@ -11,11 +11,22 @@ def get_dashboard():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM reservations")
-    reservations = cursor.fetchall()
+    # Fetch reservations from the database
+    cursor.execute("SELECT room, date, name, phone, provider FROM reservations")
+    reservations_data = cursor.fetchall()
     conn.close()
 
-    # Mock data for simplicity
+    # Build the reservations dictionary
+    reservations = {}
+    for room, date, name, phone, provider in reservations_data:
+        reservation_key = f"{room}-{date}"
+        reservations[reservation_key] = {
+            "name": name,
+            "phone": phone,
+            "provider": provider
+        }
+
+    # Prepare the response data
     data = {
         "rooms": [
             "ΟΝΤΑΣ", "ΜΠΑΛΚΟΝΙ", "ΜΗΤΣΟΣ (ΤΖΑΚΙ)", "ΜΗΤΣΟΣ (ΔΙΠΛΑ)",
@@ -23,6 +34,6 @@ def get_dashboard():
             "ΔΙΚΛΙΝΟ ΔΙΠΛΑ ΤΡΙΚ", "ΔΙΚΛΙΝΟ ΜΠΑΛΚΟΝΙ", "ΤΡΙΚΛΙΝΟ ΠΑΝΩ ΑΠΟ ΣΑΛΑ"
         ],
         "dates": [f"{day:02d}/01/25" for day in range(1, 16)],
-        "reservations": {}
+        "reservations": reservations  # Include actual reservations
     }
     return jsonify(data)

@@ -2,7 +2,7 @@
 // frontend_reservation.js
 import { loadDashboard } from './frontend_dashboard.js';
 
-export async function makeReservation(room, date) {
+export function makeReservation(room, date) {
     const name = prompt("Όνομα και Επίθετο:");
     if (!name) return alert("Reservation cancelled.");
 
@@ -28,7 +28,7 @@ export async function makeReservation(room, date) {
     })
     .then(() => {
         alert("Reservation completed successfully!");
-        loadDashboard(); // Reload dashboard after reservation
+        loadDashboard();
     })
     .catch(error => {
         console.error("Error making reservation:", error);
