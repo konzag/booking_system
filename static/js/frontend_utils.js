@@ -1,20 +1,16 @@
 
-// frontend_utils.js
-export function showProviderSelection() {
-    return new Promise((resolve) => {
-        const modal = document.createElement('div');
-        modal.innerHTML = `
-            <h3>Κράτηση από:</h3>
-            <select id="providerSelect">
-                <option value="Booking">Booking</option>
-                <option value="Τηλεφωνικά">Τηλεφωνικά</option>
-            </select>
-            <button onclick="resolveProvider()">OK</button>`;
-        document.body.appendChild(modal);
-        window.resolveProvider = () => {
-            const provider = document.getElementById('providerSelect').value;
-            document.body.removeChild(modal);
-            resolve(provider);
-        };
-    });
+export function fetchData(url, options = {}) {
+    console.log(`Fetching data from: ${url} with options:`, options);
+    return fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                console.error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error(`Error fetching data from ${url}:`, error);
+            throw error;
+        });
 }
