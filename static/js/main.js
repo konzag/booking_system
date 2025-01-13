@@ -1,12 +1,16 @@
 
-import { loadDashboard } from './frontend_dashboard.js';
+import { fetchData } from './frontend_utils.js';
+
+function loadDashboard() {
+    fetchData('/api/dashboard')
+        .then(data => {
+            console.log("Loaded dashboard data:", data);
+        })
+        .catch(error => {
+            console.error("Failed to load dashboard:", error);
+        });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Application started. Initializing dashboard...");
-    try {
-        loadDashboard();
-        console.log("Dashboard initialization complete.");
-    } catch (error) {
-        console.error("Error initializing dashboard:", error);
-    }
+    loadDashboard();
 });

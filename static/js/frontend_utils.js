@@ -1,10 +1,8 @@
 
 export function fetchData(url, options = {}) {
-    console.log(`Fetching data from: ${url} with options:`, options);
     return fetch(url, options)
         .then(response => {
             if (!response.ok) {
-                console.error(`HTTP error! Status: ${response.status}`);
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             return response.json();
