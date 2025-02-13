@@ -1,0 +1,5 @@
+body { font-family: Arial, sans-serif; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid black; padding: 10px; text-align: center; }
+.free { background-color: lightgreen; cursor: pointer; }
+.booked { background-color: lightcoral; }
