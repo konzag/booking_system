@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    fetchReservations();
-});
-
 async function fetchReservations() {
     console.log("Fetching reservations...");
     const response = await fetch("/api/get_reservations");
@@ -12,25 +8,17 @@ async function fetchReservations() {
         "ΟΝΤΑΣ", "ΜΠΑΛΚΟΝΙ", "ΜΗΤΣΟΣ (ΤΖΑΚΙ)", "ΜΗΤΣΟΣ (ΔΙΠΛΑ)", "ΤΕΤΡΑΚΛΙΝΟ",
         "ΤΡΙΚΛΙΝΟ", "ΤΡΙΚΛΙΝΟ ΜΕ ΑΥΛΙ", "ΔΙΚΛΙΝΟ ΔΙΠΛΑ ΤΡΙΚ", "ΔΙΚΛΙΝΟ ΜΠΑΛΚΟΝΙ", "ΤΡΙΚΛΙΝΟ ΠΑΝΩ ΑΠΟ ΣΑΛΑ"
     ];
-    
-    tableBody.innerHTML = "";
-    
-    let today = new Date();
-    let dates = [];
-    for (let i = 0; i < 15; i++) {
-        let date = new Date();
-        date.setDate(today.getDate() + i);
-        dates.push(date.toLocaleDateString('el-GR', { day: '2-digit', month: '2-digit', year: '2-digit' }));
-    }
-    
+
+    const dates = generateDateRange(currentStartDate, 15);
+
     let headerRow = "<tr><th>Δωμάτιο</th>";
     dates.forEach(date => {
         headerRow += `<th>${date}</th>`;
     });
     headerRow += "</tr>";
     
-    tableBody.innerHTML += headerRow;
-    
+    tableBody.innerHTML = headerRow;
+
     rooms.forEach(room => {
         let row = `<tr><td>${room}</td>`;
         dates.forEach(date => {
