@@ -1,9 +1,17 @@
-from flask import Flask, send_file, jsonify
+from flask import Flask, send_file, send_from_directory, jsonify
 import os
 import sqlite3
 from modules import dashboard, reservations
 
 app = Flask(__name__)
+
+# Ensure browser does not cache static files
+@app.after_request
+def add_header(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 # Ensure logs directory exists
 if not os.path.exists("logs"):
@@ -41,8 +49,13 @@ def init_db():
                           )''')
         conn.commit()
 
-# Κάλεσμα της init_db() όταν ξεκινά η εφαρμογή
+# Call init_db() when app starts
 init_db()
+
+# Browser use the most recent static files
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path, cache_timeout=0)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
