@@ -4,10 +4,10 @@ async function fetchReservations() {
     const data = await response.json();
     const tableBody = document.getElementById("reservationBody");
 
-    const rooms = [
-        "ΟΝΤΑΣ", "ΜΠΑΛΚΟΝΙ", "ΜΗΤΣΟΣ (ΤΖΑΚΙ)", "ΜΗΤΣΟΣ (ΔΙΠΛΑ)", "ΤΕΤΡΑΚΛΙΝΟ",
-        "ΤΡΙΚΛΙΝΟ", "ΤΡΙΚΛΙΝΟ ΜΕ ΑΥΛΙ", "ΔΙΚΛΙΝΟ ΔΙΠΛΑ ΤΡΙΚ", "ΔΙΚΛΙΝΟ ΜΠΑΛΚΟΝΙ", "ΤΡΙΚΛΙΝΟ ΠΑΝΩ ΑΠΟ ΣΑΛΑ"
-    ];
+    if (!currentStartDate) {
+        console.error("currentStartDate is undefined!");
+        return;
+    }
 
     const dates = generateDateRange(currentStartDate, 15);
 
@@ -18,6 +18,11 @@ async function fetchReservations() {
     headerRow += "</tr>";
     
     tableBody.innerHTML = headerRow;
+
+    const rooms = [
+        "ΟΝΤΑΣ", "ΜΠΑΛΚΟΝΙ", "ΜΗΤΣΟΣ (ΤΖΑΚΙ)", "ΜΗΤΣΟΣ (ΔΙΠΛΑ)", "ΤΕΤΡΑΚΛΙΝΟ",
+        "ΤΡΙΚΛΙΝΟ", "ΤΡΙΚΛΙΝΟ ΜΕ ΑΥΛΙ", "ΔΙΚΛΙΝΟ ΔΙΠΛΑ ΤΡΙΚ", "ΔΙΚΛΙΝΟ ΜΠΑΛΚΟΝΙ", "ΤΡΙΚΛΙΝΟ ΠΑΝΩ ΑΠΟ ΣΑΛΑ"
+    ];
 
     rooms.forEach(room => {
         let row = `<tr><td>${room}</td>`;
