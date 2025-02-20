@@ -3,6 +3,7 @@
 A simple web-based reservation system for managing room bookings.
 
 ---
+---
 
 ## 📂 **Folder Structure**
 - `main.py`: Main application entry point.
