@@ -17,7 +17,7 @@ function generateDateRange(startDate, days = 15) {
 function updateDateRange(newStartDate) {
     currentStartDate = new Date(newStartDate);
     console.log("Updated Start Date:", currentStartDate);
-    fetchReservations(); // Ενημερώνει το ημερολόγιο
+    fetchReservations(); // Updates the calendar
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -39,6 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
         updateDateRange(new Date());
     });
 
-    // Καλούμε τη συνάρτηση μία φορά στην αρχή για να φορτώσει η σημερινή ημερομηνία
+    // We call the function once at first to load today's date
     updateDateRange(new Date());
 });
